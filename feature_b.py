@@ -1,3 +1,5 @@
+from tabulate import tabulate
+
 class FeatureB:
     """
     Feature B: Sprint Planning
@@ -16,8 +18,9 @@ class FeatureB:
         sprint_days = self.input_sprint_days()
         no_team_members = self.input_no_team_members()
         team_members_details = self.input_team_members_details(no_team_members)
-        team_members_details, team__cap_min, team_cap_max = self.calculate_available_hours(sprint_days,team_members_details)
-        
+        team_members_details, team_cap_min, team_cap_max = self.calculate_available_hours(sprint_days,team_members_details)
+        self.display_available_hours(sprint_days,team_members_details, team_cap_min, team_cap_max)
+
     def input_sprint_days(self):
         """
         Input: Number of Sprint Days
@@ -74,6 +77,28 @@ class FeatureB:
             member['available_hours'] = "{}-{}".format(min_available_hours, max_available_hours)
 
         return (team_members_details,team_min_cap,team_max_cap)
+
+
+    def display_available_hours(self, sprint_days, team_members_details, team_min_cap, team_max_cap):
+        """
+        Display the available hours for each Team Member and Team as a whole
+        """
+        print("Available hours for each Team Member:")
+        formatted_team_members_details = []
+
+        for member in team_members_details:
+            member_details = {}
+            member_details['Name'] = member['name']
+            member_details['Days Off (PTO)'] = member['days_off']
+            member_details['Days Available'] = sprint_days - member['days_off']
+            member_details['Days for Scrum Commitment'] = member['days_for_scrum_commitment']
+            member_details['Hours Per Day'] = "{}-{}".format(member['min_hours_per_day'], member['max_hours_per_day'])
+            member_details['Total Available Hours'] = member['available_hours']
+            formatted_team_members_details.append(member_details)
+
+        formatted_team_members_details.append({"Name":"Team Capacity","Total Available Hours":"{}-{}".format(team_min_cap, team_max_cap)})  
+        print(tabulate(formatted_team_members_details, headers='keys', tablefmt='grid', showindex=False))
+
 
 if __name__ == "__main__":
     feature_b = FeatureB()
