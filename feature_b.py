@@ -16,8 +16,8 @@ class FeatureB:
         sprint_days = self.input_sprint_days()
         no_team_members = self.input_no_team_members()
         team_members_details = self.input_team_members_details(no_team_members)
-        team_members_details = self.calculate_available_hours(sprint_days,team_members_details)
-
+        team_members_details, team__cap_min, team_cap_max = self.calculate_available_hours(sprint_days,team_members_details)
+        
     def input_sprint_days(self):
         """
         Input: Number of Sprint Days
@@ -61,15 +61,19 @@ class FeatureB:
 
     def calculate_available_hours(self, sprint_days, team_members_details):
         """
-        Calculate the available hours for each Team Member
+        Calculate the available hours for each Team Member and Team as a whole
         """
+        team_min_cap = 0
+        team_max_cap = 0
         for member in team_members_details:
             available_days = sprint_days - member['days_off'] - member['days_for_scrum_commitment']
             min_available_hours = member['min_hours_per_day'] * available_days
             max_available_hours = member['max_hours_per_day'] * available_days
+            team_min_cap += min_available_hours
+            team_max_cap += max_available_hours
             member['available_hours'] = "{}-{}".format(min_available_hours, max_available_hours)
 
-        return team_members_details
+        return (team_members_details,team_min_cap,team_max_cap)
 
 if __name__ == "__main__":
     feature_b = FeatureB()
