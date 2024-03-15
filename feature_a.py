@@ -4,39 +4,39 @@ class feature_a:
     ''' This class is responsible for collecting the data for the feature A '''
 
     def __init__(self):
-        self.sprint_points = []
-        self.average_velocity = 0.0
-        self.input()
+        sprint_points = self.input()
+        average_velocity = self.calculate_velocity(sprint_points)
+        self.display_output(sprint_points,average_velocity)
 
     def input(self):
         ''' Collect previous sprint point completion data to calculate velocity of the team '''
 
         print("Collecting data for average velocity of the team")
         no_of_sprints = int(input("Enter the number of previous sprints completed: "))
-
+        sprint_points = []
         for i in range(no_of_sprints):
             ''' Collect sprint points completed in each sprint '''
 
             sprint_point = int(input("Enter the sprint points completed in sprint " + str(i+1) + ": "))
-            self.sprint_points.append(sprint_point)
+            sprint_points.append(sprint_point)
         print("Data collected successfully")
-        self.calculate_velocity()
+        return sprint_points
 
-    def calculate_velocity(self):
+    def calculate_velocity(self,sprint_points):
         ''' Calculate the average velocity of the team '''
 
-        total_sprint_points = sum(self.sprint_points)
-        no_of_sprints = len(self.sprint_points)
-        self.average_velocity = total_sprint_points / no_of_sprints
-        self.display_output()
+        total_sprint_points = sum(sprint_points)
+        no_of_sprints = len(sprint_points)
+        average_velocity = total_sprint_points / no_of_sprints
+        return average_velocity 
 
-    def display_output(self):
+    def display_output(self, sprint_points,average_velocity):
         ''' Display the output of the feature A '''
-        index = [i for i in range(1, len(self.sprint_points)+1)]
-        sprint_details = zip(index, self.sprint_points)
+        index = [i for i in range(1, len(sprint_points)+1)]
+        sprint_details = zip(index, sprint_points)
         print(tabulate(sprint_details, headers=["Sprint", "Sprint Points"], tablefmt="grid"))
-        print("The average velocity of the team is: ", self.average_velocity)
-        
+        print("The average velocity of the team is: ", average_velocity)
+
 if __name__ == "__main__":
     ''' This is the main function which will be called when the file is executed '''
     ins_a = feature_a()
