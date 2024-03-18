@@ -8,8 +8,16 @@ def menu():
     choice = int(input("Enter your choice: "))
     if choice == 1:
         ins_a = feature_a.feature_a()
+        sprint_points = ins_a.input()
+        average_velocity = ins_a.calculate_velocity(sprint_points)
+        ins_a.display_output(sprint_points,average_velocity)
     elif choice == 2:
         ins_b = feature_b.FeatureB()
+        sprint_days = ins_b.input_sprint_days()
+        no_team_members = ins_b.input_no_team_members()
+        team_members_details = ins_b.input_team_members_details(no_team_members)
+        team_members_details, team_cap_min, team_cap_max = ins_b.calculate_available_hours(sprint_days,team_members_details)
+        ins_b.display_available_hours(sprint_days,team_members_details, team_cap_min, team_cap_max)
     else:
         exit()
 
