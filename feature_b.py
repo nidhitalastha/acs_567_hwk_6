@@ -14,13 +14,6 @@ class FeatureB:
         
         Calculate the available hours for each Team Member
     """
-    def __init__(self):
-        sprint_days = self.input_sprint_days()
-        no_team_members = self.input_no_team_members()
-        team_members_details = self.input_team_members_details(no_team_members)
-        team_members_details, team_cap_min, team_cap_max = self.calculate_available_hours(sprint_days,team_members_details)
-        self.display_available_hours(sprint_days,team_members_details, team_cap_min, team_cap_max)
-
     def input_sprint_days(self):
         """
         Input: Number of Sprint Days
@@ -102,3 +95,8 @@ class FeatureB:
 
 if __name__ == "__main__":
     feature_b = FeatureB()
+    sprint_days = feature_b.input_sprint_days()
+    no_team_members = feature_b.input_no_team_members()
+    team_members_details = feature_b.input_team_members_details(no_team_members)
+    team_members_details, team_cap_min, team_cap_max = feature_b.calculate_available_hours(sprint_days,team_members_details)
+    feature_b.display_available_hours(sprint_days,team_members_details, team_cap_min, team_cap_max)
